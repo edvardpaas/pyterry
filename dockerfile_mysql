@@ -1,0 +1,10 @@
+FROM python:3
+
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir networkx sqlalchemy mysqlclient pg8000 duckdb-engine sqlalchemy sqlglot psycopg psycopg[binary]
+# Note: we had to merge the two "pip install" package lists here, otherwise
+# the last "pip install" command in the OP may break dependency resolution…
+
+WORKDIR /usr/src/terry
+COPY . .
+CMD ["python", "./benchmark_mysql.py"]
